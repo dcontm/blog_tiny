@@ -1,0 +1,42 @@
+<div class="comments" data-id={{comment.id}}>
+  <div class="media">
+    <img class="mr-2" src="{{comment.get_author_avatar}}" alt="avatar">
+    <span class="online_status"></span>
+    <div class="media-body">
+      <h6 class="mt-0 mb-0"><span class="commentauthor" data-id={{comment.id}}>{{comment.author.first_name}}</span></h6>
+      <p class="mb-1">
+        <small class="text-muted">
+
+          {% if comment.updated %}
+            <span class="commentcreated" data-id={{comment.id}}>{{comment.created | timesince}} назад | изменено</span>
+          {% else %}
+            <span class="commentcreated" data-id={{comment.id}}>{{comment.created | timesince}} назад </span>
+          {% endif%}
+
+        <a href="#" class="answercomment" data-id={{comment.id}}>Ответить</a>
+        <a href="#" class="updatecomment" data-id={{comment.id}}>/Редактировать</a>
+        <a href="#" class="deletecomment" data-id={{comment.id}}>/Удалить</a>
+
+        </small>
+      </p>
+      <p class="commentmessage" data-id={{comment.id}}>{{comment.message}}</p>
+      <!--============================= LIKESYSTEM BLOCK =============================-->
+      <div class="likesystem">
+        <h6>
+          <span class="likes" data-type="comment" data-id={{comment.id}} style="color: green;">
+            <i class="fa fa-thumbs-up"></i> 
+          </span>
+          <span class='countlikes data-id={{comment.id}}'>{{comment.likesystem.likes.count}}</span>&nbsp;
+
+          <span class="dislikes" data-type="comment" data-id={{comment.id}} style="color: red;">
+            <i class="fa fa-thumbs-down"></i>
+          </span>
+          <span class='countdislikes' data-id={{comment.id}}>{{comment.likesystem.dislikes.count}}</span>&nbsp;
+        </h6>
+      </div>
+      <!--============================= END LIKESYSTEM BLOCK =============================-->
+        <div class='answers_block' data-id={{comment.id}}>
+        </div>
+    </div>
+  </div>
+</div>

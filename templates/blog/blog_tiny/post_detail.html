@@ -1,0 +1,157 @@
+{% extends '../base.html'%}
+
+{% block title %} {{post.headline}} | Tiny {% endblock %}
+{% block description%}{{post.title}}{% endblock%}
+{% block og_title %} {{post.headline}} | Tiny {% endblock%}
+{% block og_description %}{{post.description}}{% endblock %}
+{% block og_image%}{{request.scheme}}://{{request.get_host}}{{post.label_img.url}}/{% endblock%}
+
+{% block content %}
+<!--============================= BLOG DETAIL =============================-->
+<section class="main-block">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8 responsive-wrap">
+            <div class="full-blog">
+                <figure class="img-holder">
+                    <img src="{{post.label_img.url}}" class="img-fluid" alt="image">
+                </figure>
+                <div class="blog-content">
+                    <p class="text-muted">Автор:<a href="#"> {{post.author}}</a> {{post.get_created}}</p>
+
+                    {% if post.tags %}
+                    <p class="text-muted">Теги:
+                      {% for tag in post.get_tags %}
+                      <span class="alert alert-dark" role="alert" style="padding: 5px" >
+                        <a class="alert-link" href="/search/?q={{tag}}">
+                          {{tag}}
+                        </a>
+                      </span>&#8194;
+                      {% endfor %}
+                    </p>
+                    {% endif %}
+
+                    <ul class="social-icons blog-share">
+                      <i class="fa fa-share-o fa-2x"></i>
+                      <li><a href="https://vk.com/share.php?url=http://localhost:8000{{post.get_absolute_url}}&title={{post.headline}}&image=http://localhost:8000/media/{{post.label_img}}"
+   target="_blank" rel="nofollow"><i class="fa fa-vk" aria-hidden="true"></i></a></li>
+                      <li><a href="https://twitter.com/share?url=http://localhost:8000/{{object.get_absolute_url}}"
+   target="_blank" rel="nofollow"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8000/{{object.get_absolute_url}}"
+   target="_blank" rel="nofollow"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    </ul>
+                    <h2>{{post.headline}}</h2>
+                    <div class="blog-text">
+                      <p  class="lead"> {{post.article|safe}} <p>
+                    </div>
+                </div>
+
+                <!--============================= LIKESYSTEM BLOCK =============================-->
+                <p>{% include '../post_likesystem.html'%}</p>
+                <!--============================= FORM COMMENT BLOCK =============================-->
+                
+                {% if user.is_authenticated %}
+                <form method="POST" id='addcommentform' data-type="post" data-id={{post.id}} > {% csrf_token %}
+                  <div class="form-group">
+                      <label for="addcommentform" id='labelcommentform'><h4>Оставить комментрий</h4></label>
+                      <textarea class="form-control" rows="3" name="message" maxlength="500" id="id_message" required="true"></textarea>
+                      <button type='submit' class='btn-submit' id='addcomment' data-type="post" data-id={{post.id}} >Отправить</button>
+                      <button type="submit" class="btn-submit" id='closeaddcomment'>Закрыть</button>
+                  </div>
+                </form>
+                {% else %}
+                <h6>Только авторизированные пользователи могут оставлять комментарии<br>
+                <a href='/login/vk-oauth2'>Войти через VK </a></p>
+                </h6>
+                {% endif %}
+
+                <h5>Коментарии <span id="comments_count">{{comments_count}}</span></h5>
+                <div id='comments_block'>
+                  {% for comment in comments %}
+                    {% if comment.level == 0 %}
+                      {% include '../base_comment.html'%}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+          </div>
+        </div>
+        <div class="col-md-4 responsive-wrap">
+            <div class="sidebar">
+              <!-- Actual search box -->
+              <form action="/search/">
+                <div class="widget-box">
+                    <div class="input-group">
+                        <input type="text" class="form-control comment-text" placeholder="Поиск по тегам.." aria-label="Recipient's username" name = "q">
+                        <div class="input-group-append">
+                            <input type="submit" value="GO" class="btn btn-outline-secondary btn-widget">
+                        </div>
+                    </div>
+                </div>
+              </form>
+                <div class="widget-box">
+                    <h4>Последнии статьи</h4>
+                    {% for post in last_posts %}
+                    <div class="latest-blog">
+                        <a href="{{post.get_absolute_url}}">
+                            <img src="{{post.label_img.url}}" alt="image">
+                            <div class="blog-thumb-content">
+                                <p><strong>{{post.headline}}</strong></p>
+                                <p>{{post.get_created}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="widget-box">
+                    <h4>Теги</h4>
+                    <div class="categories">
+                      {% for tag in tags %}
+                        <a href="/search/?q={{tag.word}}">{{tag.word}}<span class="ti-angle-right"></span></a>
+                      {% endfor %}
+                    </div>
+                </div>
+
+                <div class="widget-box">
+                    <h4>Популярные статьи</h4>
+                    {% for post in popular_posts %}
+                    <div class="latest-blog">
+                        <a href="{{post.get_absolute_url}}">
+                            <img src="{{post.label_img.url}}" alt="image">
+                            <div class="blog-thumb-content">
+                                <p><strong>{{post.headline}}</strong></p>
+                                <p>{{post.get_created}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+</section>
+
+<!-- Modal auth-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="notify_auth">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+             Для выполнения этого действия необходимо<a href="/login/vk-oauth2" class="alert-link"> авторизироваться</a>
+        </div>
+    </div>
+</div>
+<!-- Modal spam-->
+<div class="modal fade" id="spamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="notify_auth">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+             Ограничение на количество комментариев. Попробуйте позже.
+        </div>
+    </div>
+</div>
+{% endblock %}

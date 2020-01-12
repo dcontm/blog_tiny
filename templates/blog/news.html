@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %} Новости | Tiny {% endblock %}
+{% block og_title %} Новости | Tiny {% endblock%}
+
+{% block content %}
+<h1>Новости</h1>
+<hr>
+<section>
+	{% for news in news_list %}
+	<div class="col-md-12 ml-4 pl-4 mr-4 pr-4">
+			<h4 class="card-title"><strong>{{news.headline}}</strong></h4>
+      <p class="text-muted">{{news.get_created}}</p>
+      {% if news.description %}
+			<p class="card-text">{{news.description}}</p>
+      {% endif %}
+
+      {% if news.question %}
+      <div class="vote-block">
+          <h5>{{news.question_headline}}</h5>
+          {% if news.question_is_active == False %}
+            <h6 style="color:red;">Опрос завершен.<h6>
+          {% endif %}
+
+          {% for variable in news.get_quest_variables %}
+          <div class="vote" data-id={{variable.id}} data-news-id={{news.id}}>{{variable.title}} - <span class="vote-label" style="color:black;">{{variable.get_variable_proc}}%</span>
+            <div class="progress" style="width: 50%;">
+  					 <div class="progress-bar bg-info" role="progressbar" style="width: {{variable.get_variable_proc}}%" aria-valuenow="{{variable.get_votes}}" aria-valuemin="0" aria-valuemax="100" >
+              </div>
+				    </div>
+          </div>
+          <br>
+          {% endfor %}
+
+				  <h6><span class="votes_count" data-news-id={{news.id}}>Проголосовало {{news.total_votes}}</span></h6>
+      </div>
+      {% endif %}
+
+      <div>
+        <a href="/news/{{news.id}}" class="btn btn-primary">Комментарии {{news.comment_count}}</a>
+      </div>
+	</div>
+	<hr>
+	{% endfor %}
+</section>
+  <!--//END BLOG -->
+<!-- Modal error votes-->
+<div class="modal fade" id="votesErrorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="notify_auth">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+             Ошибка доступа. Опрос закрыт или необходимо<a href="/login/vk-oauth2" class="alert-link"> авторизироваться</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

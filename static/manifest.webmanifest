@@ -1,0 +1,28 @@
+{
+  "name": "Tiny-blog",
+  "short_name": "Tiny",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url" : "http://127.0.0.1:8000/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color":"#ffffff",
+  "description": "Сборник статей и уроков о веб-разработке, языке программирования python и других темах информационных технологий.",
+  "icons": [{
+    "src": "images/favicon.png",
+    "sizes": "64x64",
+    "type": "image/png"
+  }, {
+    "src": "images/logo.png",
+    "sizes": "120x32",
+    "type": "image/png"
+  }, {
+    "src": "images/footer-logo.png",
+    "sizes": "120x32",
+    "type": "image/png"
+  },{
+    "src": "images/python-logos.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }]
+}

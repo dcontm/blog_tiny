@@ -1,0 +1,175 @@
+{% extends '../base.html'%}
+
+{% block title %}{{news.headline}} | Tiny{% endblock %}
+{% block description%}{{news.headline}}{% endblock%}
+{% block og_title %}{{news.headline}} | Tiny{% endblock%}
+{% block og_description %}{{news.description}}{% endblock %}
+
+{% block content %}
+<!--============================= BLOG DETAIL =============================-->
+<section class="main-block">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-8 responsive-wrap">
+            <div class="full-blog">
+                <figure class="img-holder">
+                  <h2>{{news.headline}}</h2>
+                   <p class="text-muted">{{news.get_created}}</p>
+                </figure>
+                <div class="blog-content">
+                    {% if news.description %}
+                    <div class="blog-text">
+                      <p  class="lead"> {{news.description}} <p>
+                    </div>
+                    {% endif %}
+
+                    {% if news.question %}
+                    <div class="vote-block">
+                        <h5>{{news.question_headline}}</h5>
+                        {% if news.question_is_active == False %}
+                          <h6 style="color:red;">Опрос завершен.<h6>
+                        {% endif %}
+
+                        {% for variable in news.get_quest_variables %}
+                        <div class="vote" data-id={{variable.id}} data-news-id={{news.id}}>{{variable.title}} - <span class="vote-label" style="color:black;">{{variable.get_variable_proc}}%</span>
+                          <div class="progress" style="width: 50%;">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: {{variable.get_variable_proc}}%" aria-valuenow="{{variable.get_votes}}" aria-valuemin="0" aria-valuemax="100" >
+                            </div>
+                          </div>
+                        </div>
+                        <br>
+                        {% endfor %}
+
+                        <h6><span class="votes_count" data-news-id={{news.id}}>Проголосовало {{news.total_votes}}</span></h6>
+                    </div>
+                    {% endif %}
+
+                    <ul class="social-icons blog-share">
+                      <i class="fa fa-share-o fa-2x"></i>
+                      <li><a href="https://vk.com/share.php?url=http://localhost:8000{{object.get_absolute_url}}&title={{post.headline}}"
+   target="_blank" rel="nofollow"><i class="fa fa-vk" aria-hidden="true"></i></a></li>
+                      <li><a href="https://twitter.com/share?url=http://localhost:8000/{{object.get_absolute_url}}"
+   target="_blank" rel="nofollow"><i class="fa fa-twitter"></i></a></li>
+                      <li><a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8000/{{object.get_absolute_url}}"
+   target="_blank" rel="nofollow"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+                <br>
+                {% if user.is_authenticated %}
+                <form method="POST" id='addcommentform' data-type="news"
+                data-id={{news.id}}> {% csrf_token %}
+                  <div class="form-group">
+                      <label for="addcommentform" id='labelcommentform'><h4>Оставить комментрий</h4></label>
+                      <textarea class="form-control" rows="3" name="message" maxlength="500" id="id_message"></textarea>
+                      <button type='submit' class='btn-submit' id='addcomment' data-type="news" data-id={{news.id}} >Отправить</button>
+                      <button type="submit" class="btn-submit" id='closeaddcomment'>Закрыть</button>
+                  </div>
+                </form>
+                {% else %}
+                <h6>Только авторизированные пользователи могут оставлять комментарии<br>
+                <a href='/login/vk-oauth2'>Войти через VK </a></p>
+                </h6>
+                {% endif %}
+
+                <h5>Коментарии <span id="comments_count">{{news.comment_count}}</span></h5>
+                <div id='comments_block'>
+                  {% for comment in comments %}
+                    {% if comment.level == 0 %}
+                      {% include '../base_comment.html'%}
+                    {% endif %}
+                  {% endfor %}
+                </div>
+          </div>
+        </div>
+        <div class="col-md-4 responsive-wrap">
+            <div class="sidebar">
+              <!-- Actual search box -->
+              <form action="/search/">
+                <div class="widget-box">
+                    <div class="input-group">
+                        <input type="text" class="form-control comment-text" placeholder="Поиск по тегам.." aria-label="Recipient's username" name = "q">
+                        <div class="input-group-append">
+                            <input type="submit" value="GO" class="btn btn-outline-secondary btn-widget">
+                        </div>
+                    </div>
+                </div>
+              </form>
+                <div class="widget-box">
+                    <h4>Последнии статьи</h4>
+                    {% for post in last_posts %}
+                    <div class="latest-blog">
+                        <a href="{{post.get_absolute_url}}">
+                            <img src="{{post.label_img.url}}" alt="image">
+                            <div class="blog-thumb-content">
+                                <p><strong>{{post.headline}}</strong></p>
+                                <p>{{post.get_created}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="widget-box">
+                    <h4>Теги</h4>
+                    <div class="categories">
+                      {% for tag in tags %}
+                        <a href="#">{{tag.word}}<span class="ti-angle-right"></span></a>
+                      {% endfor %}
+                    </div>
+                </div>
+
+                <div class="widget-box">
+                    <h4>Популярные статьи</h4>
+                    {% for post in popular_posts %}
+                    <div class="latest-blog">
+                        <a href="{{post.get_absolute_url}}">
+                            <img src="{{post.label_img.url}}" alt="image">
+                            <div class="blog-thumb-content">
+                                <p><strong>{{post.headline}}</strong></p>
+                                <p>{{post.get_created}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+      </div>
+    </div>
+</section>
+
+<!-- Modal auth-->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="notify_auth">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+             Для выполнения этого действия необходимо<a href="/login/vk-oauth2" class="alert-link"> авторизироваться</a>
+        </div>
+    </div>
+</div>
+<!-- Modal spam-->
+<div class="modal fade" id="spamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="notify_auth">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+             Ограничение на количество комментариев. Попробуйте позже.
+        </div>
+    </div>
+</div>
+
+<!-- Modal error votes-->
+<div class="modal fade" id="votesErrorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="notify_auth">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+             Ошибка доступа. Опрос закрыт или необходимо<a href="/login/vk-oauth2" class="alert-link"> авторизироваться</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

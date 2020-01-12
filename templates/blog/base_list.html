@@ -1,0 +1,27 @@
+<div class="col-md-6 col-lg-3 article-first">
+    <div class="news-block">
+        <img src="{{ post.label_img.url }}" class="img-fluid" alt="image">
+        <div class="news-title">
+            <p>{{post.get_created}}</p>
+            <h5>{{post.headline}}</h5>
+
+            {% if post.tags %}
+            <p>
+              {% for tag in post.tags.all %}
+                <span class="alert alert-dark" role="alert" style="padding: 0px" >
+                    {{tag}}
+                </span>&#8194;
+              {% endfor %}
+            </p>
+            {% endif %}
+
+            <h6>
+              <i class="fa fa-thumbs-up"></i> {{post.likesystem.likes.count}}&nbsp;
+              <i class="fa fa-thumbs-down"></i> {{post.likesystem.dislikes.count}}&nbsp;
+              <i class="fa fa-eye"></i> {{post.views}}&nbsp;
+              <i class="fa fa-comments"></i>{{post.comment_count}}&nbsp;
+            </h6>
+            <a href="/post/{{post.id}}" class="blog2-link">Read More ➝</a>
+        </div>
+    </div>
+</div>

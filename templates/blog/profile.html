@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %} Профиль | Tiny {% endblock %}
+{% block og_title %} Профиль | Tiny {% endblock%}
+
+{% block content %}
+<section class="main-block ml-5">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="mb-4">
+  					<img class="profile_avatar" src="{{profile.avatar_url}}" alt="avatar"></img>
+  				</div>
+  				<hr>
+
+  				<div class="mt-2">
+  					<h6>
+  						Пользователь:
+  						<br><br>
+  						<strong>{{user.first_name}} {{user.last_name}}</strong>
+  					</h6>
+  					<br>
+
+  					{% if user.email %}
+  					<h6>
+  						Почта:
+  						<br><br>
+  						<strong>
+  							<span id="email">{{user.email}}&nbsp;</span>
+  						</strong>
+  					</h6>
+
+  					{% endif %}
+  					
+  					<br><br>
+  					<h6>Дата регистрации:<br><br><strong>{{user.date_joined | date:"j N, Y г."}}</strong></h6>
+				</div>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12">
+				<h6>Настройка оповещений</h6>
+				{% if profile.subscribe_answers %}
+				<div class="mt-3">
+					<input type="checkbox" checked data-toggle="toggle" data-on="Вкл." data-off="Выкл." data-onstyle="info" data-offstyle="light" data-size="xs" data-subs="answers" class="subscribe"> - ответы на комментарии.
+				</div>
+				{% else %}
+				<div class="mt-3">
+					<input type="checkbox" data-toggle="toggle" data-on="Вкл." data-off="Выкл." data-onstyle="info" data-offstyle="light" data-size="xs" data-subs="answers" class="subscribe"> - ответы на комментарии.
+				</div>
+				{% endif %}
+
+				{% if profile.subscribe_article %}
+				<div class="mt-3">
+					<input type="checkbox" checked data-toggle="toggle" data-on="Вкл." data-off="Выкл." data-onstyle="info" data-offstyle="light" data-size="xs" data-subs="article" class="subscribe"> - новая публикация.
+				</div>
+				{% else %}
+				<div class="mt-3">
+					<input type="checkbox" data-toggle="toggle" data-on="Вкл." data-off="Выкл." data-onstyle="info" data-offstyle="light" data-size="xs" data-subs="article" class="subscribe">  - новая публикация.
+				</div>
+				{% endif %}
+
+				{% if profile.subscribe_news %}
+				<div class="mt-3">
+					<input type="checkbox" checked data-toggle="toggle" data-on="Вкл." data-off="Выкл." data-onstyle="info" data-offstyle="light" data-size="xs" data-subs="news" class="subscribe"> - новости сайта.
+				</div>
+				{% else %}
+				<div class="mt-3">
+					<input type="checkbox" data-toggle="toggle" data-on="Вкл." data-off="Выкл." data-onstyle="info" data-offstyle="light" data-size="xs" data-subs="news" class="subscribe"> - новости сайта.
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

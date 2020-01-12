@@ -1,0 +1,51 @@
+<div class="comments" data-id={{answer.id}}>
+  <div class="media mt-4">
+    <!--<a class="pr-2" href="#">-->
+      <img mg class="mr-2" src="{{answer.get_author_avatar}}" alt="avatar">
+      <span class="online_status"></span>
+    <!--</a>-->
+    <div class="media-body">
+      <h6 class="mt-0 mb-0"><span class="commentauthor" data-id={{answer.id}}>{{answer.author.first_name}}</span>
+        {% if comment.author == post.author %}
+        <span class="badge badge-success">автор</span>
+        {% endif %}
+      </h6>
+      <p class="mb-1">
+        <small class="text-muted">
+
+          {% if comment.updated %}
+            <span class="commentcreated" data-id={{answer.id}}>{{comment.created | timesince}} назад | изменено</span>
+          {% else %}
+            <span class="commentcreated" data-id={{answer.id}}>{{comment.created | timesince}} назад</span>
+          {% endif%}
+
+        {% if user.is_authenticated %}
+        <a href="#" class="answercomment" data-id={{answer.id}}>Ответить</a>
+        {% endif %}
+
+        {% if answer.author == user or user.is_staff == True %}
+        <a href="#" class="updatecomment" data-id={{answer.id}}>/Редактировать</a>
+        <a href="#" class="deletecomment" data-id={{answer.id}}>/Удалить</a>
+        {% endif %}
+
+        </small>
+      </p>
+      <p class="commentmessage" data-id={{answer.id}}>{{answer.message}}</p>
+      <!--============================= LIKESYSTEM BLOCK =============================-->
+      <div class="likesystem">
+        <h6>
+          <span class="likes" data-type="comment" data-id={{answer.id}} style="color: green;">
+            <i class="fa fa-thumbs-up"></i> 
+          </span>
+          <span class='countlikes data-id={{answer.id}}'>{{answer.likesystem.likes.count}}</span>&nbsp;
+
+          <span class="dislikes" data-type="comment" data-id={{answer.id}} style="color: red;">
+            <i class="fa fa-thumbs-down"></i>
+          </span>
+          <span class='countdislikes' data-id={{answer.id}}>{{answer.likesystem.dislikes.count}}</span>&nbsp;
+        </h6>
+      </div>      
+      <!--============================= END LIKESYSTEM BLOCK =============================-->
+    </div>
+  </div>
+</div>

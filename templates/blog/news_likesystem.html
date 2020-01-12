@@ -1,0 +1,15 @@
+<div class="likesystem">
+  <h6>
+    <span class="likes" data-type="news" data-id={{news.id}} style="color: green;">
+      <i class="fa fa-thumbs-up"></i> 
+    </span>
+    <span class='countlikes data-id={{news.id}}'>{{news.likesystem.likes.count}}</span>&nbsp;
+
+    <span class="dislikes" data-type="news" data-id={{news.id}} style="color: red;">
+      <i class="fa fa-thumbs-down"></i>
+    </span>
+    <span class='countdislikes' data-id={{news.id}}>{{news.likesystem.dislikes.count}}</span>&nbsp;
+    <span><i class="fa fa-eye " aria-hidden="true"></i></span> {{news.views}}&nbsp;
+    <i class="fa fa-comments"></i><span id="comments_count_str">{{comments_count}}&nbsp;</span>
+  </h6>
+</div>
