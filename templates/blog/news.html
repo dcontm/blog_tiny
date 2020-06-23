@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %} Новости | Tiny {% endblock %}
-{% block og_title %} Новости | Tiny {% endblock%}
+{% block title %} Tiny | Новости {% endblock %}
+{% block og_title %} Tiny | Новости {% endblock%}
 
 {% block content %}
 <h1>Новости</h1>
 <hr>
 <section>
+  {% if news_list %}
 	{% for news in news_list %}
 	<div class="col-md-12 ml-4 pl-4 mr-4 pr-4">
 			<h4 class="card-title"><strong>{{news.headline}}</strong></h4>
@@ -42,6 +43,9 @@
 	</div>
 	<hr>
 	{% endfor %}
+  {% else %}
+  <h3>Пока здесь нет новостей</h3>
+  {% endif %}
 </section>
   <!--//END BLOG -->
 <!-- Modal error votes-->

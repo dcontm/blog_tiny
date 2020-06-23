@@ -6,12 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog_tiny', '0001_initial'),
+        ("blog_tiny", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='variable',
-            options={'verbose_name': 'Вариант', 'verbose_name_plural': 'Варианты'},
+            name="variable",
+            options={
+                "verbose_name": "Вариант",
+                "verbose_name_plural": "Варианты",
+            },
         ),
     ]

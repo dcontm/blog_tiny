@@ -1,6 +1,6 @@
 {% extends '../base.html'%}
 
-{% block title %} {{post.headline}} | Tiny {% endblock %}
+{% block title %} Tiny | {{post.headline}} {% endblock %}
 {% block description%}{{post.title}}{% endblock%}
 {% block og_title %} {{post.headline}} | Tiny {% endblock%}
 {% block og_description %}{{post.description}}{% endblock %}
@@ -42,7 +42,7 @@
                     </ul>
                     <h2>{{post.headline}}</h2>
                     <div class="blog-text">
-                      <p  class="lead"> {{post.article|safe}} <p>
+                      {{post.article|safe}}
                     </div>
                 </div>
 

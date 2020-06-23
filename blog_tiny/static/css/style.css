@@ -1580,25 +1580,26 @@ hr {
 
 .blog-content {
   padding: 0 0; }
-  .blog-content p {
-    text-indent: 20px; /* Отступ первой строки в пикселах */
+  /*.blog-content p {
+    text-indent: 20px; /*Отступ первой строки в пикселах */
    }
   .blog-content p span {
     font-weight: 600; }
-  .blog-content p a {
-    color: #ff6b6b; }
-    .blog-content p a:hover {
-      text-decoration: none; }
+  /*.blog-content p a {
+    color: #ff6b6b; } */
+  /*  .blog-content p a:hover {
+      text-decoration: none; } */
 
-.blog-text h4 {
+/*.blog-text h4 {
   font-weight: 600; }
 
 .blog-text p {
-  line-height: 1.8;
+  text-indent: 0;
+  line-height: 1.5;
   color: #505050; }
 
 .blog-text h6 a {
-  color: #ff6b6b; }
+  color: #ff6b6b; }*/
 
 .blog-share {
   border-top: 1px solid #eee;

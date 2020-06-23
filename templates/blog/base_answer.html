@@ -6,17 +6,17 @@
     <!--</a>-->
     <div class="media-body">
       <h6 class="mt-0 mb-0"><span class="commentauthor" data-id={{answer.id}}>{{answer.author.first_name}}</span>
-        {% if comment.author == post.author %}
+        {% if answer.author == post.author %}
         <span class="badge badge-success">автор</span>
         {% endif %}
       </h6>
       <p class="mb-1">
         <small class="text-muted">
 
-          {% if comment.updated %}
-            <span class="commentcreated" data-id={{answer.id}}>{{comment.created | timesince}} назад | изменено</span>
+          {% if answer.updated %}
+            <span class="commentcreated" data-id={{answer.id}}>{{answer.created | timesince}} назад | изменено</span>
           {% else %}
-            <span class="commentcreated" data-id={{answer.id}}>{{comment.created | timesince}} назад</span>
+            <span class="commentcreated" data-id={{answer.id}}>{{answer.created | timesince}} назад</span>
           {% endif%}
 
         {% if user.is_authenticated %}

@@ -1594,7 +1594,8 @@ hr {
   font-weight: 600; }
 
 .blog-text p {
-  line-height: 1.8;
+  text-indent: 0px;
+  line-height: 1.5;
   color: #505050; }
 
 .blog-text h6 a {

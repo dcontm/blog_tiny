@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %} Tiny | 500 {% endblock %}
+{% block og_title %} Tiny | 500 {% endblock%}
+
+{% block content %}
+<!--============================= 404 =============================-->
+<section class="main-block d-flex align-items-center error-404">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                    <div class="error-page">
+                    <h2>500</h2>
+                    <p>Извините, неизвестная ошибка сервера</p>
+                    <a href="{% url 'home' %}" class="btn btn-outline-danger btn-confirmation">НА ГЛАВНУЮ</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//END 404 -->
+{% endblock %}

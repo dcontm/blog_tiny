@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
-{% block title %} Профиль | Tiny {% endblock %}
-{% block og_title %} Профиль | Tiny {% endblock%}
+{% block title %} Tiny | Профиль {% endblock %}
+{% block og_title %} Tiny | Профиль {% endblock%}
 
 {% block content %}
 <section class="main-block ml-5">
@@ -39,6 +39,7 @@
 		</div>
 		<hr>
 		<div class="row">
+			{% if user.email %}
 			<div class="col-md-12">
 				<h6>Настройка оповещений</h6>
 				{% if profile.subscribe_answers %}
@@ -71,6 +72,7 @@
 				</div>
 				{% endif %}
 			</div>
+			{% endif %}
 		</div>
 	</div>
 </section>

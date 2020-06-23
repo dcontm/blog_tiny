@@ -19,7 +19,7 @@ from django.urls import path, include
 from filebrowser.sites import site
 
 urlpatterns = [
-	path('admin/filebrowser/', site.urls),
-	path('admin/', admin.site.urls),
-	path('', include('blog_tiny.urls')),
+    path("supermanadminsupersekretkey/filebrowser/", site.urls),
+    path("supermanadminsupersekretkey/", admin.site.urls),
+    path("", include("blog_tiny.urls")),
 ]

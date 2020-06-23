@@ -15,127 +15,322 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('contenttypes', '0002_remove_content_type_name'),
+        ("contenttypes", "0002_remove_content_type_name"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='News',
+            name="News",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('headline', models.CharField(max_length=300)),
-                ('description', models.CharField(blank=True, max_length=1500, null=True)),
-                ('created', models.DateTimeField(default=django.utils.timezone.now)),
-                ('question', models.BooleanField(default=False)),
-                ('question_headline', models.CharField(blank=True, max_length=1000, null=True)),
-                ('question_is_active', models.BooleanField(default=True)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("headline", models.CharField(max_length=300)),
+                (
+                    "description",
+                    models.CharField(blank=True, max_length=1500, null=True),
+                ),
+                (
+                    "created",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                ("question", models.BooleanField(default=False)),
+                (
+                    "question_headline",
+                    models.CharField(blank=True, max_length=1000, null=True),
+                ),
+                ("question_is_active", models.BooleanField(default=True)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Новость',
-                'verbose_name_plural': 'Новости',
+                "verbose_name": "Новость",
+                "verbose_name_plural": "Новости",
             },
         ),
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('label_img', imagekit.models.fields.ProcessedImageField(blank=True, default='label_img/images.jpeg', null=True, upload_to=blog_tiny.utils.path_label_img)),
-                ('theme', models.CharField(choices=[('DJANGO', 'Django'), ('VUE', 'Vue'), ('PYTHON', 'Python'), ('OTHER', 'Other')], max_length=150)),
-                ('headline', models.CharField(max_length=500)),
-                ('description', models.CharField(blank=True, max_length=1500, null=True)),
-                ('article', tinymce.models.HTMLField(verbose_name='Article')),
-                ('created', models.DateTimeField(default=django.utils.timezone.now)),
-                ('views', models.IntegerField(default=0)),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "label_img",
+                    imagekit.models.fields.ProcessedImageField(
+                        blank=True,
+                        default="label_img/images.jpeg",
+                        null=True,
+                        upload_to=blog_tiny.utils.path_label_img,
+                    ),
+                ),
+                (
+                    "theme",
+                    models.CharField(
+                        choices=[
+                            ("DJANGO", "Django"),
+                            ("VUE", "Vue"),
+                            ("PYTHON", "Python"),
+                            ("OTHER", "Other"),
+                        ],
+                        max_length=150,
+                    ),
+                ),
+                ("headline", models.CharField(max_length=500)),
+                (
+                    "description",
+                    models.CharField(blank=True, max_length=1500, null=True),
+                ),
+                ("article", tinymce.models.HTMLField(verbose_name="Article")),
+                (
+                    "created",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                ("views", models.IntegerField(default=0)),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Пост',
-                'verbose_name_plural': 'Посты',
-                'ordering': ['-id'],
+                "verbose_name": "Пост",
+                "verbose_name_plural": "Посты",
+                "ordering": ["-id"],
             },
         ),
         migrations.CreateModel(
-            name='Variable',
+            name="Variable",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=300)),
-                ('news', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='news', to='blog_tiny.News')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=300)),
+                (
+                    "news",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="news",
+                        to="blog_tiny.News",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Vote',
+            name="Vote",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('news', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vote', to='blog_tiny.News')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vote', to=settings.AUTH_USER_MODEL)),
-                ('variable', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='vote', to='blog_tiny.Variable')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "news",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="vote",
+                        to="blog_tiny.News",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="vote",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "variable",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="vote",
+                        to="blog_tiny.Variable",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Голос',
-                'verbose_name_plural': 'Голоса',
+                "verbose_name": "Голос",
+                "verbose_name_plural": "Голоса",
             },
         ),
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('word', models.CharField(max_length=150, unique=True)),
-                ('post', models.ManyToManyField(blank=True, related_name='tags', to='blog_tiny.Post')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("word", models.CharField(max_length=150, unique=True)),
+                (
+                    "post",
+                    models.ManyToManyField(
+                        blank=True, related_name="tags", to="blog_tiny.Post"
+                    ),
+                ),
+            ],
+            options={"verbose_name": "Тег", "verbose_name_plural": "Теги",},
+        ),
+        migrations.CreateModel(
+            name="Profile",
+            fields=[
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "avatar_url",
+                    models.CharField(
+                        default="/media/avatars/default-XRANGE202418022019.jpg",
+                        max_length=200,
+                    ),
+                ),
+                (
+                    "vk_user_ids",
+                    models.CharField(blank=True, max_length=200, null=True),
+                ),
+                ("subscribe_answers", models.BooleanField(default=True)),
+                ("subscribe_article", models.BooleanField(default=True)),
+                ("subscribe_news", models.BooleanField(default=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Тег',
-                'verbose_name_plural': 'Теги',
+                "verbose_name": "Профиль",
+                "verbose_name_plural": "Профили",
             },
         ),
         migrations.CreateModel(
-            name='Profile',
+            name="LikeSystem",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('avatar_url', models.CharField(default='/media/avatars/default-XRANGE202418022019.jpg', max_length=200)),
-                ('vk_user_ids', models.CharField(blank=True, max_length=200, null=True)),
-                ('subscribe_answers', models.BooleanField(default=True)),
-                ('subscribe_article', models.BooleanField(default=True)),
-                ('subscribe_news', models.BooleanField(default=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "action",
+                    models.SmallIntegerField(
+                        choices=[(-1, "like"), (1, "dislike")]
+                    ),
+                ),
+                ("object_id", models.PositiveIntegerField()),
+                (
+                    "content_type",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="contenttypes.ContentType",
+                    ),
+                ),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Профиль',
-                'verbose_name_plural': 'Профили',
+                "verbose_name": "Лайк/дизлайк",
+                "verbose_name_plural": "Лайки/дизлайки",
+                "ordering": ["-id"],
             },
         ),
         migrations.CreateModel(
-            name='LikeSystem',
+            name="Comment",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('action', models.SmallIntegerField(choices=[(-1, 'like'), (1, 'dislike')])),
-                ('object_id', models.PositiveIntegerField()),
-                ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("message", models.CharField(max_length=1000)),
+                ("level", models.SmallIntegerField(default=0)),
+                (
+                    "created",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
+                ("updated", models.BooleanField(default=False)),
+                ("object_id", models.PositiveIntegerField()),
+                (
+                    "answer",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="blog_tiny.Comment",
+                    ),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "content_type",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="contenttypes.ContentType",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Лайк/дизлайк',
-                'verbose_name_plural': 'Лайки/дизлайки',
-                'ordering': ['-id'],
-            },
-        ),
-        migrations.CreateModel(
-            name='Comment',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('message', models.CharField(max_length=1000)),
-                ('level', models.SmallIntegerField(default=0)),
-                ('created', models.DateTimeField(default=django.utils.timezone.now)),
-                ('updated', models.BooleanField(default=False)),
-                ('object_id', models.PositiveIntegerField()),
-                ('answer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='blog_tiny.Comment')),
-                ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('content_type', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='contenttypes.ContentType')),
-            ],
-            options={
-                'verbose_name': 'Комментарий',
-                'verbose_name_plural': 'Комментарии',
-                'ordering': ['-id'],
+                "verbose_name": "Комментарий",
+                "verbose_name_plural": "Комментарии",
+                "ordering": ["-id"],
             },
         ),
     ]
