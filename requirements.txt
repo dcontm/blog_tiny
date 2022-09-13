@@ -10,7 +10,7 @@ django-appconf==1.0.3
 django-filebrowser-no-grappelli==3.7.8
 django-imagekit==4.0.2
 django-tinymce4-lite==1.7.5
-flower==0.9.3
+flower==1.2.0
 idna==2.8
 importlib-metadata==0.23
 jsmin==2.2.2
